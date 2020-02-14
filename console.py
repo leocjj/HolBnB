@@ -1,9 +1,15 @@
 #!/usr/bin/python3
+""" Console module. Used for user command line intructions."""
 
 import cmd, sys
 
 class HBNBCommand(cmd.Cmd):
-    intro = 'AirBnB_clone console.\ngithub users vik407 leocjj\n'
+    intro = '\n..............................\n'\
+            '. AirBnB_clone console V0.1  .\n'\
+            '. For help type: help        .\n'\
+            '..............................\n'\
+            '. github users vik407 leocjj .\n'\
+            '..............................\n'
     prompt = '(hbnb) '
     file = None
 
@@ -26,4 +32,8 @@ class HBNBCommand(cmd.Cmd):
 #    return tuple(map(int, arg.split()))
 
 if __name__ == '__main__':
-    HBNBCommand().cmdloop()
+    while True:
+        try:
+            HBNBCommand().cmdloop()
+        except KeyboardInterrupt:
+            continue

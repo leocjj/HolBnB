@@ -5,6 +5,8 @@ import cmd, sys, models
 from models.base_model import BaseModel
 
 class HBNBCommand(cmd.Cmd):
+    """ Console class. Used for user command line intructions."""
+
     intro = '\n..............................\n'\
             '. AirBnB_clone console V0.1  .\n'\
             '. For help type: help        .\n'\
@@ -12,40 +14,94 @@ class HBNBCommand(cmd.Cmd):
             '. github users vik407 leocjj .\n'\
             '..............................\n'
     prompt = '(hbnb) '
+    HBNBCommand_classes = ['BaseModel']
     file = None
 
-    # ----- basic commands -----
-    def do_create(self, arg):
-        'Create new instance, saves it (to JSON file) and prints the id.\n'\
-        'Usage: create <class_name>\n'
-        if arg == '':
+    def do_create(self, line):
+        '\nCreate new instance, saves it (to JSON file) and prints the id.\n'\
+        '-> Usage: (hbnb) create <class_name>\n'
+        if not line:
             print('** class name missing **')
             return
-        args = arg.split()
-        try:
-            new_instance = eval(args[0] + '()')
-            print(new_instance.id)
-            new_instance.save()
-        except:
+
+        args = line.split()
+        if len(args) == 1:
+            try:
+                new_instance = eval(args[0] + '()')
+                new_instance.save()
+                print(new_instance.id)
+            except:
+                print("** class doesn't exist **")
+                return
+        else:
+            print('** class name missing **')
+            return
+
+    def do_show(self, line):
+        '\nPrints string representation of an instance.\n'\
+        '-> Usage: (hbnb) show <class_name> <id>\n'
+        if not line:
+            print('** class name missing **')
+            return
+
+        args = line.split()
+        if len(args) == 0:
+            print('** class name missing **')
+            return
+        if len(args) == 1:
+            print('** instance id missing **')
+            return
+        if args[0] not in self.HBNBCommand_classes:
             print("** class doesn't exist **")
             return
-    def do_quit(self, arg):
+        if len(args) == 2:
+            try:
+                print(storage.all()[args[0] + '.' + args[1]])
+            except:
+                print("** no instance found **")
+                return
+
+    def do_destroy(self, line):
+        '\nDeletes an instance based on the class name and id.\n'\
+        '-> Usage: (hbnb) destroy <class_name> <id>\n'
+        if not line:
+            print('** class name missing **')
+            return
+
+        args = line.split()
+        if len(args) == 0:
+            print('** class name missing **')
+            return
+        if len(args) == 1:
+            print('** instance id missing **')
+            return
+        if args[0] not in self.HBNBCommand_classes:
+            print("** class doesn't exist **")
+            return
+        if len(args) == 2:
+            try:
+                print(storage.all()[args[0] + '.' + args[1]])
+            except:
+                print("** no instance found **")
+                return
+
+    def do_quit(self, line):
         'Quit the program!'
         exit(0)
-    def do_EOF(self, arg):
+    def do_EOF(self, line):
         'Quit the program!'
         print()
         exit(0)
     def emptyline(self):
         'Do nothing if empty line is entered!'
         pass
-    def default(self, arg):
+    def default(self, line):
         'Do nothing if wrong command is entered!'
         pass
 
-#def parse(arg):
+#def parse(line):
 #    'Convert arguments string to an arguments list'
-#    return list(map(int, arg.split()))
+#    return list(map(int, line.split()))
 
 if __name__ == '__main__':
     while True:

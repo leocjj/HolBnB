@@ -2,4 +2,8 @@
 """ BaseModel class. Used as base for future classes."""
 
 class BaseModel():
-    pass
+    def __init__(self):
+        """Init instance."""
+        self.id = 1
+    def save(self):
+        pass

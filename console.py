@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """ Console module. Used for user command line intructions."""
 
-import cmd, sys
+import cmd, sys, models
+from models.base_model import BaseModel
 
 class HBNBCommand(cmd.Cmd):
     intro = '\n..............................\n'\
@@ -13,12 +14,27 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
     file = None
 
-    # ----- basic turtle commands -----
+    # ----- basic commands -----
+    def do_create(self, arg):
+        'Create new instance, saves it (to JSON file) and prints the id.\n'\
+        'Usage: create <class_name>\n'
+        if arg == '':
+            print('** class name missing **')
+            return
+        args = arg.split()
+        try:
+            new_instance = eval(args[0] + '()')
+            print(new_instance.id)
+            new_instance.save()
+        except:
+            print("** class doesn't exist **")
+            return
     def do_quit(self, arg):
         'Quit the program!'
         exit(0)
     def do_EOF(self, arg):
         'Quit the program!'
+        print()
         exit(0)
     def emptyline(self):
         'Do nothing if empty line is entered!'
@@ -28,8 +44,8 @@ class HBNBCommand(cmd.Cmd):
         pass
 
 #def parse(arg):
-#    'Convert a series of zero or more numbers to an argument tuple'
-#    return tuple(map(int, arg.split()))
+#    'Convert arguments string to an arguments list'
+#    return list(map(int, arg.split()))
 
 if __name__ == '__main__':
     while True:

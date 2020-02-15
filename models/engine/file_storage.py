@@ -21,7 +21,7 @@ class FileStorage:
         """sets in __objects the obj with key <obj class name>.id
         """
         if obj:
-            key = "{:s}.{:d}".format(type(obj).__name__, obj.id)
+            key = "{:s}.{:s}".format(type(obj).__name__, obj.id)
             self.__objects[key] = obj
 
     def save(self):
@@ -32,7 +32,7 @@ class FileStorage:
         for key, value in self.__objects.items():
             res[key] = value.to_dict()
         # Store dict on file
-        with open(self.__file_path, w) as file:
+        with open(self.__file_path, 'w') as file:
             json.dump(res, file)
 
     def reload(self):
@@ -41,7 +41,7 @@ class FileStorage:
         no exception should be raised)
         """
         try:
-            with open(self.__file_path, r) as file:
+            with open(self.__file_path, 'r') as file:
                 for key, value in (json.load(file)).items():
                     value = eval(value["__class__"])(**value)
                     self.__objects[key] = value

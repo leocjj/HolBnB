@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """ Console module. Used for user command line intructions."""
 
-import cmd, sys, models
+import cmd, sys
 from models.base_model import BaseModel
+from models import storage
 
 class HBNBCommand(cmd.Cmd):
     """ Console class. Used for user command line intructions."""
@@ -57,7 +58,7 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 2:
             try:
                 print(storage.all()[args[0] + '.' + args[1]])
-            except:
+            except KeyError:
                 print("** no instance found **")
                 return
 
@@ -67,7 +68,6 @@ class HBNBCommand(cmd.Cmd):
         if not line:
             print('** class name missing **')
             return
-
         args = line.split()
         if len(args) == 0:
             print('** class name missing **')
@@ -80,10 +80,33 @@ class HBNBCommand(cmd.Cmd):
             return
         if len(args) == 2:
             try:
-                print(storage.all()[args[0] + '.' + args[1]])
-            except:
+                del storage.all()[args[0] + '.' + args[1]]
+            except KeyError:
                 print("** no instance found **")
                 return
+
+    def do_all(self, line):
+        '\nPrints all string representation of all instances based or not on\n'
+        'the class name.\n'\
+        '-> Usage: (hbnb) all <class_name>\n'
+        '-> Usage: (hbnb) all\n'
+        if not line:
+            a = []
+            for key, value in storage.all().items():
+                a.append(str(value))
+            print(a)
+            return
+        args = line.split()
+        if len(args) == 1:
+            if args[0] not in self.HBNBCommand_classes:
+                print("** class doesn't exist **")
+                return
+            a = []
+            for key, value in storage.all().items():
+                if str(key.split('.')[0]) == args[0]:
+                    a.append(str(value))
+            print(a)
+            return
 
     def do_quit(self, line):
         'Quit the program!'

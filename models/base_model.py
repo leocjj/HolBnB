@@ -13,13 +13,19 @@ class BaseModel():
         if len(kwargs) is not 0:
             for key, value in kwargs.items():
                 if key == "id":
-                    self.id = kwargs.get(key)
+                    self.id = value
+                    continue
                 if key == "created_at":
-                    self.created_at = datetime.strptime(kwargs.get(key),
+                    self.created_at = datetime.strptime(value,
                                                         '%Y-%m-%dT%H:%M:%S.%f')
+                    continue
                 if key == "updated_at":
-                    self.updated_at = datetime.strptime(kwargs.get(key),
+                    self.updated_at = datetime.strptime(value,
                                                         '%Y-%m-%dT%H:%M:%S.%f')
+                    continue
+                if key == '__class__':
+                    continue
+                setattr(self, key, value)
         else:
             self.id = str(uuid4())
             self.created_at = datetime.now()

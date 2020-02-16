@@ -108,6 +108,50 @@ class HBNBCommand(cmd.Cmd):
             print(a)
             return
 
+    def do_update(self, line):
+        '\nDeletes an instance based on the class name and id.\n'\
+        '-> Usage: (hbnb) destroy <class_name> <id>\n'
+        if not line:
+            print('** class name missing **')
+            return
+        args = line.split()
+        if len(args) == 0:
+            print('** class name missing **')
+            return
+        if len(args) >= 1 and args[0] not in self.HBNBCommand_classes:
+                print("** class doesn't exist **")
+                return
+        if len(args) == 1:
+            print('** instance id missing **')
+            return
+        if len(args) >=2:
+            try:
+                storage.all()[args[0] + '.' + args[1]]
+            except KeyError:
+                print("** no instance found **")
+                return
+        if len(args) == 2:
+            print('** attribute name missing **')
+            return
+        if len(args) == 3:
+            print('** value missing **')
+            return
+        if len(args) == 4:
+            try:
+                try:
+                    if '.' in args[3]:
+                        value = float(args[3])
+                    else:
+                        value = int(args[3])
+                except ValueError:
+                    value = str(args[3]).strip("\"':")
+                setattr(storage.all()[args[0] + '.' + args[1]], args[2].strip("\"':"), value)
+                storage.save()
+            except KeyError:
+                print("** no instance found **")
+                return
+
+
     def do_quit(self, line):
         'Quit the program!'
         exit(0)

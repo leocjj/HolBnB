@@ -81,6 +81,7 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 2:
             try:
                 del storage.all()[args[0] + '.' + args[1]]
+                storage.save()
             except KeyError:
                 print("** no instance found **")
                 return

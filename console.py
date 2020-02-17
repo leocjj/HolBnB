@@ -1,8 +1,11 @@
 #!/usr/bin/python3
 """ Console module. Used for user command line intructions."""
 
-import cmd, sys
+import cmd
+import sys
 from models.base_model import BaseModel
+from models.user import User
+
 from models import storage
 
 class HBNBCommand(cmd.Cmd):
@@ -15,7 +18,7 @@ class HBNBCommand(cmd.Cmd):
             '. github users vik407 leocjj .\n'\
             '..............................\n'
     prompt = '(hbnb) '
-    HBNBCommand_classes = ['BaseModel']
+    HBNBCommand_classes = ['BaseModel', 'User']
     file = None
 
     def do_create(self, line):
@@ -110,8 +113,9 @@ class HBNBCommand(cmd.Cmd):
             return
 
     def do_update(self, line):
-        '\nDeletes an instance based on the class name and id.\n'\
-        '-> Usage: (hbnb) destroy <class_name> <id>\n'
+        '\nUpdates an instance based on the class name and id by adding or'\
+        '\nupdating attribute (save the change into the JSON file)\n'\
+        '-> Usage: (hbnb) update <ClassName> <id> <attr_name> "<attr_value>"\n'
         if not line:
             print('** class name missing **')
             return
@@ -152,7 +156,6 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
                 return
 
-
     def do_quit(self, line):
         'Quit the program!'
         exit(0)
@@ -166,10 +169,6 @@ class HBNBCommand(cmd.Cmd):
     def default(self, line):
         'Do nothing if wrong command is entered!'
         pass
-
-#def parse(line):
-#    'Convert arguments string to an arguments list'
-#    return list(map(int, line.split()))
 
 if __name__ == '__main__':
     while True:

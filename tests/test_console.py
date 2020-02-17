@@ -41,5 +41,15 @@ class TestConsole(unittest.TestCase):
         except FileNotFoundError:
             pass
 
+    #Run pep8 validate console.py
+    def test_console_py(self):
+        """pep8 console.py test
+        """
+        s = pep8.StyleGuide(quiet=True)
+        f = p.check_files(['console.py'])
+        self.assertEqual(p.total_errors, 0, 'pep8 error found!')
+
+    #TODO-Run test inside console (...)
+
 if __name__ == "__main__":
     unittest.main()

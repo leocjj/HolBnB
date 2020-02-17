@@ -54,17 +54,21 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsNotNone(BaseModel.save.__doc__)
         self.assertIsNotNone(BaseModel.to_dict.__doc__)
 
-    # TO_DO Test Save
+    # Test Save
     def test_save_base_model(self):
-        """Test the save method if works
+        """Test the save method
         """
-        pass
+        self.b.save()
+        self.assertEqual(self.b.updated_at, self.b.created_at)
 
-    # TO_DO Test to_dict
+    # Test to_dict
     def test_to_dict_base_model(self):
-        """Test if to_dict works
+        """Test to_dict
         """
-        pass
+        test_dict = self.b.to_dict()
+        self.assertEqual(self.b.__class__.__name__, 'BaseModel')
+        self.assertIsInstance(test_dict['created_at'], str)
+        self.assertIsInstance(test_dict['updated_at'], str)
 
     # Instance creation (BaseModel)
     def test_instance_basemodel(self):

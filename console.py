@@ -23,7 +23,7 @@ class HBNBCommand(cmd.Cmd):
             '. github users vik407 leocjj .\n'\
             '..............................\n'
     prompt = '(hbnb) '
-    HBNBCommand_classes = ['BaseModel', 'User']
+    HBNBCommand_classes = ['BaseModel', 'User', 'State', 'City', 'Amenity', 'Place', 'Review']
     file = None
 
     def do_create(self, line):

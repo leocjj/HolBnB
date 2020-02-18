@@ -13,6 +13,7 @@ from models.review import Review
 
 from models import storage
 
+
 class HBNBCommand(cmd.Cmd):
     """ Console class. Used for user command line intructions."""
 
@@ -23,12 +24,13 @@ class HBNBCommand(cmd.Cmd):
             '. github users vik407 leocjj .\n'\
             '..............................\n'
     prompt = '(hbnb) '
-    HBNBCommand_classes = ['BaseModel', 'User', 'State', 'City', 'Amenity', 'Place', 'Review']
+    HBNBCommand_classes = ['BaseModel', 'User',
+                           'State', 'City', 'Amenity', 'Place', 'Review']
     file = None
 
     def do_create(self, line):
         '\nCreate new instance, saves it (to JSON file) and prints the id.\n'\
-        '-> Usage: (hbnb) create <class_name>\n'
+            '-> Usage: (hbnb) create <class_name>\n'
         if not line:
             print('** class name missing **')
             return
@@ -48,7 +50,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, line):
         '\nPrints string representation of an instance.\n'\
-        '-> Usage: (hbnb) show <class_name> <id>\n'
+            '-> Usage: (hbnb) show <class_name> <id>\n'
         if not line:
             print('** class name missing **')
             return
@@ -72,7 +74,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, line):
         '\nDeletes an instance based on the class name and id.\n'\
-        '-> Usage: (hbnb) destroy <class_name> <id>\n'
+            '-> Usage: (hbnb) destroy <class_name> <id>\n'
         if not line:
             print('** class name missing **')
             return
@@ -97,7 +99,7 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, line):
         '\nPrints all string representation of all instances based or not on\n'
         'the class name.\n'\
-        '-> Usage: (hbnb) all <class_name>\n'
+            '-> Usage: (hbnb) all <class_name>\n'
         '-> Usage: (hbnb) all\n'
         if not line:
             a = []
@@ -119,8 +121,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, line):
         '\nUpdates an instance based on the class name and id by adding or'\
-        '\nupdating attribute (save the change into the JSON file)\n'\
-        '-> Usage: (hbnb) update <ClassName> <id> <attr_name> "<attr_value>"\n'
+            '\nupdating attribute (save the change into the JSON file)\n'\
+            '-> (hbnb) update <ClassName> <id> <attr_name> "<attr_value>"\n'
         if not line:
             print('** class name missing **')
             return
@@ -129,12 +131,12 @@ class HBNBCommand(cmd.Cmd):
             print('** class name missing **')
             return
         if len(args) >= 1 and args[0] not in self.HBNBCommand_classes:
-                print("** class doesn't exist **")
-                return
+            print("** class doesn't exist **")
+            return
         if len(args) == 1:
             print('** instance id missing **')
             return
-        if len(args) >=2:
+        if len(args) >= 2:
             try:
                 storage.all()[args[0] + '.' + args[1]]
             except KeyError:
@@ -155,7 +157,8 @@ class HBNBCommand(cmd.Cmd):
                         value = int(args[3])
                 except ValueError:
                     value = str(args[3]).strip("\"':")
-                setattr(storage.all()[args[0] + '.' + args[1]], args[2].strip("\"':"), value)
+                setattr(storage.all()[args[0] + '.' +
+                                      args[1]], args[2].strip("\"':"), value)
                 storage.save()
             except KeyError:
                 print("** no instance found **")
@@ -164,16 +167,20 @@ class HBNBCommand(cmd.Cmd):
     def do_quit(self, line):
         'Quit the program!'
         exit(0)
+
     def do_EOF(self, line):
         'Quit the program!'
         print()
         exit(0)
+
     def emptyline(self):
         'Do nothing if empty line is entered!'
         pass
+
     def default(self, line):
         'Do nothing if wrong command is entered!'
         pass
+
 
 if __name__ == '__main__':
     while True:

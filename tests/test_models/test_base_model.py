@@ -41,8 +41,8 @@ class TestBaseModel(unittest.TestCase):
         """pep8 base_model.py test
         """
         s = pep8.StyleGuide(quiet=True)
-        f = p.check_files(['models/base_model.py'])
-        self.assertEqual(p.total_errors, 0, 'pep8 error found!')
+        f = s.check_files(['models/base_model.py'])
+        self.assertEqual(s.total_errors, 0, 'pep8 error found!')
 
     # Docstrings
     def test_docstrings_base_model(self):

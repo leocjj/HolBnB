@@ -7,6 +7,8 @@ import models
 
 
 class BaseModel():
+    """Basemodel class declaration
+    """
     def __init__(self, *args, **kwargs):
         """Validate non interactive and init method
         """

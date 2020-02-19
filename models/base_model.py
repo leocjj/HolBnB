@@ -9,6 +9,7 @@ import models
 class BaseModel():
     """Basemodel class declaration
     """
+
     def __init__(self, *args, **kwargs):
         """Validate non interactive and init method
         """
@@ -19,11 +20,11 @@ class BaseModel():
                     continue
                 if key == "created_at":
                     self.__dict__["created_at"] = datetime.strptime(
-                                                value, '%Y-%m-%dT%H:%M:%S.%f')
+                        value, '%Y-%m-%dT%H:%M:%S.%f')
                     continue
                 if key == "updated_at":
                     self.__dict__["updated_at"] = datetime.strptime(
-                                                value, '%Y-%m-%dT%H:%M:%S.%f')
+                        value, '%Y-%m-%dT%H:%M:%S.%f')
                     continue
                 if key == '__class__':
                     continue

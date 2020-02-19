@@ -49,7 +49,5 @@ class TestConsole(unittest.TestCase):
         f = s.check_files(['console.py'])
         self.assertEqual(f.total_errors, 0, 'pep8 error found!')
 
-    # TODO-Run test inside console (...)
-
 if __name__ == "__main__":
     unittest.main()
